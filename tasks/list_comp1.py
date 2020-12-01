@@ -10,16 +10,9 @@ def list_comp1(input_data):
     >> list_comp1([1,0,90,40])
     >> [0,0,1,1]
     """
+    transformed_data = [0 if 0<=i<10 else 1 for i in input_data]
 
-    transformed_data = []
-    for i in input_data:
-
-        if i >= 0:
-
-            if i < 10:
-                transformed_data.append(0)
-            else:
-                transformed_data.append(1)
     
     return transformed_data
+
             
