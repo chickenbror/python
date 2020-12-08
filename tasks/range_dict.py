@@ -31,17 +31,19 @@ class RangeDict(dict):
                 return key
     
     def __setitem__(self, key, item):
-        key_to_delete = None
+        keys_to_delete = []
         for existing_key in self.keys():
             if existing_key[0] <= key[0] <= existing_key[1] \
                 or existing_key[0] <= key[1] <= existing_key[1]:
-                key_to_delete = existing_key
+                keys_to_delete.append(existing_key)
         
-        if key_to_delete:
-            self.pop(key_to_delete)
+        if keys_to_delete != []:
+            for k in keys_to_delete:
+                self.pop(k)
         super().__setitem__(key, item)
         
 
-my_range_dict = RangeDict({(1,10):1, (30,34): 2, (5,10):5})
-my_range_dict[(25,29)] = 3
-my_range_dict[(5,15)] = 3
+my_range_dict = RangeDict({(1,10):1, (30,34): 2, (5,10):5, (100,101):4})
+my_range_dict[(9,32)] = 3
+# my_range_dict[(5,15)] = 3
+print(my_range_dict)
