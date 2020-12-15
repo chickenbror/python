@@ -31,28 +31,29 @@ class DataGenerator():
     
     def __init__(self, filelist):
         self.filelist = filelist
-        self.firstlines = []
-        self.update(filelist) # Update 'firstlines' list
-        self.idx=-1
+        self.idx = -1
         
-    # Iterate over 'firstlines'
     def __iter__(self):
         return self
     def __next__(self):
-        if self.idx > len(self.firstlines):
-            raise StopIteration
-        self.idx+= 1
-        return self.firstlines[self.idx]
         
-        
-    def update(self, filelist):
-        for file in self.filelist:
-            # open > read > close each file
-            with open(file, 'r') as f:
+        def read_firstline(filename):
+            with open(filename, 'r') as f:
                 first_line = f.readline()
-                if 'ignore' not in first_line:
-                    self.firstlines.append(first_line)
+                return first_line
+
+
+        if self.idx> len(self.filelist):
+            raise StopIteration
+        self.idx +=1
+        if 'ignore' not in read_firstline(self.filelist[self.idx]):
+            return read_firstline(self.filelist[self.idx])
+        # Go to next item if skipped
+        else:
+            return next(self)
+
         
+
 
 import os
 def newfolder(files, destination):
