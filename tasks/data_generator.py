@@ -42,10 +42,11 @@ class DataGenerator():
                 first_line = f.readline()
                 return first_line
 
-
-        if self.idx> len(self.filelist):
-            raise StopIteration
         self.idx +=1
+        if self.idx> len(self.filelist)-1:
+            raise StopIteration
+        
+        # Read the N-th item in the filelist
         if 'ignore' not in read_firstline(self.filelist[self.idx]):
             return read_firstline(self.filelist[self.idx])
         # Go to next item if skipped
